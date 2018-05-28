@@ -1,6 +1,6 @@
 {
   "name": "bookmarks-pkg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Navigate & fuzzy search your chrome bookmarks",
   "keywords": [
     "typie",
@@ -15,7 +15,7 @@
   "author": "Rotem Grimberg <rotemgrim@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "typie-sdk": "github:typie/typie-sdk"
+    "typie-sdk": "^1.0.7"
   },
   "typie": {
     "title": "Bookmarks",

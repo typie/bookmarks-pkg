@@ -12,6 +12,11 @@ class Bookmarks extends AbstractTypiePackage {
         this.populate();
     }
 
+    activate(pkgList, item, cb) {
+        shell.openExternal(item.getPath());
+        this.win.hide();
+    }
+
     populate() {
         this.bookmarksWalker.walk()
             .then(items => {
