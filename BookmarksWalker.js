@@ -3,6 +3,8 @@ const { AbstractTypiePackage, TypieRowItem } = require('typie-sdk');
 const is = require('electron-is');
 const Path = require('path');
 const fs = require('fs');
+const chokidar = require("chokidar");
+
 
 let chromeDir;
 if (is.windows()) {
@@ -17,6 +19,7 @@ class BookmarksWalker {
         this.pkg = pkg;
         this.bookPath = Path.join(chromeDir, "Bookmarks");
         this.bookmarksArray = [];
+        this.isWatching = false;
     }
 
     walk() {
@@ -27,10 +30,12 @@ class BookmarksWalker {
                     Object.keys(data.roots).forEach((key) => {
                         this.walkBookmarksFolder(data.roots[key]);
                     });
+                    this.watchFile();
                     resolve(this.bookmarksArray);
                 })
                 .catch(e => {
                     console.error("could not get bookmarks data", e);
+                    this.watchFile();
                     reject(this.bookmarksArray);
                 });
         });
@@ -51,12 +56,14 @@ class BookmarksWalker {
     }
 
     addBookmark(child, parentName) {
+        const lastUsed = parseInt(child.meta_info.last_visited_desktop / 1000 / 10000) || 0;
         this.bookmarksArray.push(
             (new TypieRowItem(child.name + ' - Bookmarks'))
                 .setPackage('Bookmarks')
                 .setDB('global')
                 .setDescription(parentName + ': ' + child.url)
                 .setPath(child.url)
+                .setUnixtime(lastUsed)
                 .setIcon(defaultUrlIco)
         );
     }
@@ -71,6 +78,18 @@ class BookmarksWalker {
                 }
             });
         });
+    }
+
+    watchFile() {
+        if (!this.isWatching) {
+            const watcher = chokidar.watch(this.bookPath, {persistent: true});
+            watcher.on("change", (path, stats) => {
+                if (stats) {
+                    this.walk();
+                }
+            });
+            this.isWatching = true;
+        }
     }
 }
 module.exports = BookmarksWalker;
