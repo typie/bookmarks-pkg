@@ -34,7 +34,7 @@ class Bookmarks extends AbstractTypiePackage {
     }
 
     enterPkg(pkgList, item, cb) {
-        this.typie.setPkg(this.packageName).setDB(this.packageName);
+        this.typie.setPkg(this.packageName).setDB('global');
         this.typie.getRows(10).orderBy('count').desc().go()
             .then(res => {
                 this.win.send('resultList', res);
