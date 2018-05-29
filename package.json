@@ -1,6 +1,6 @@
 {
   "name": "bookmarks-pkg",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Navigate & fuzzy search your chrome bookmarks",
   "keywords": [
     "typie",

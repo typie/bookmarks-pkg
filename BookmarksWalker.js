@@ -30,12 +30,10 @@ class BookmarksWalker {
                     Object.keys(data.roots).forEach((key) => {
                         this.walkBookmarksFolder(data.roots[key]);
                     });
-                    this.watchFile();
                     resolve(this.bookmarksArray);
                 })
                 .catch(e => {
                     console.error("could not get bookmarks data", e);
-                    this.watchFile();
                     reject(this.bookmarksArray);
                 });
         });
@@ -56,7 +54,10 @@ class BookmarksWalker {
     }
 
     addBookmark(child, parentName) {
-        const lastUsed = parseInt(child.meta_info.last_visited_desktop / 1000 / 10000) || 0;
+        let lastUsed = 0;
+        if (child.meta_info && child.meta_info.last_visited_desktop) {
+            lastUsed = parseInt(child.meta_info.last_visited_desktop / 1000 / 10000);
+        }
         this.bookmarksArray.push(
             (new TypieRowItem(child.name + ' - Bookmarks'))
                 .setPackage('Bookmarks')
