@@ -3,7 +3,7 @@ const { TypieRowItem } = require('typie-sdk');
 const is = require('electron-is');
 const Path = require('path');
 const fs = require('fs');
-const chokidar = require("chokidar");
+// const chokidar = require("chokidar");
 
 
 let chromeDir;
@@ -81,22 +81,22 @@ class BookmarksWalker {
         });
     }
 
-    watchFile() {
-        if (!this.isWatching) {
-            console.log("start watching for bookmarks changes");
-            const watcher = chokidar.watch(this.bookPath, {persistent: true});
-            watcher.on("change", (path, stats) => {
-                if (stats) {
-                    this.walk();
-                }
-            });
-            this.isWatching = true;
-        }
-    }
-
-    stopWatch() {
-        chokidar.unwatch(this.bookPath);
-    }
+    // watchFile() {
+    //     if (!this.isWatching) {
+    //         console.log("start watching for bookmarks changes");
+    //         const watcher = chokidar.watch(this.bookPath, {persistent: true});
+    //         watcher.on("change", (path, stats) => {
+    //             if (stats) {
+    //                 this.walk();
+    //             }
+    //         });
+    //         this.isWatching = true;
+    //     }
+    // }
+    //
+    // stopWatch() {
+    //     chokidar.unwatch(this.bookPath);
+    // }
 
 
 }

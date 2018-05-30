@@ -24,7 +24,7 @@ class Bookmarks extends AbstractTypiePackage {
                 this.typie.multipleInsert(items).go()
                     .then(data => {
                         console.info('Bookmarks done adding', data);
-                        this.bookmarksWalker.watchFile();
+                        // this.bookmarksWalker.watchFile();
                     })
                     .catch(err => console.error('Bookmarks insert error', err));
             })
@@ -46,10 +46,10 @@ class Bookmarks extends AbstractTypiePackage {
             .catch(err => console.log(err));
     }
 
-    destroy() {
-        this.bookmarksWalker.stopWatch();
-        super.destroy();
-    }
+    // destroy() {
+    //     this.bookmarksWalker.stopWatch();
+    //     super.destroy();
+    // }
 }
 module.exports = Bookmarks;
 

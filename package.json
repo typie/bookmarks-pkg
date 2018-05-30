@@ -15,7 +15,6 @@
   "author": "Rotem Grimberg <rotemgrim@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "chokidar": "^2.0.3",
     "electron-is": "^2.4.1",
     "typie-sdk": "^1.0.8"
   },
